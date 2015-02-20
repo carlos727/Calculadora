@@ -1,19 +1,13 @@
 package com.uninorte.calculadora;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -101,8 +95,8 @@ public class MainActivity extends ActionBarActivity {
     public void delete(View view) {
 
         TextView expression = (TextView) findViewById(R.id.text);
-        if(!expression.getText().toString().isEmpty()) expression.setText(expression.getText().toString().substring(0, expression.getText().length() - 1));
-
+        if(!expression.getText().toString().isEmpty())
+            expression.setText(expression.getText().toString().substring(0, expression.getText().length() - 1));
     }
 
     public void clear(View view) {
@@ -115,22 +109,21 @@ public class MainActivity extends ActionBarActivity {
         if(o != 1 && o != 3) result.setTextSize(60);
         result.setText("0");
         //Toast.makeText(this,""+o,Toast.LENGTH_SHORT).show();
-
     }
 
     public double solveExpression(ArrayList<String> array){
         if(array.size()==1){
-            return new Double(array.get(0)); //Devuelve el valor si no hay operaciones que realizar
+            return Double.valueOf(array.get(0)); //Devuelve el valor si no hay operaciones que realizar
         }else{
             int i = 1;
             boolean swm = false;
-            while(i < array.size()-1 && swm == false){ //Miramos si hay multiplicaciones y divisiones
+            while(i < array.size()-1 && !swm){ //Miramos si hay multiplicaciones y divisiones
                 String s = array.get(i);
                 if(s.equals("*") || s.equals("/")){
-                    Double n1 = new Double(array.get(i-1));
-                    Double n2 = new Double(array.get(i+1));
+                    Double n1 = Double.valueOf(array.get(i-1));
+                    Double n2 = Double.valueOf(array.get(i + 1));
                     if(s.equals("*")) array.set(i,""+(n1*n2));
-                    if(s.equals("/")) array.set(i,""+(n1/n2));
+                    if(s.equals("/")) array.set(i, "" + (n1 / n2));
                     array.remove(i-1);
                     array.remove(i);
                     swm = true;
@@ -138,15 +131,15 @@ public class MainActivity extends ActionBarActivity {
                 i++;
             }
 
-            if (swm==false) {
+            if (!swm) {
                 i = 1;
                 boolean sw = false;
-                while(i < array.size()-1 && sw == false){ //Miramos si hay sumas y restas
+                while(i < array.size()-1 && !sw){ //Miramos si hay sumas y restas
                     String s = array.get(i);
                     if(s.equals("+") || s.equals("-")){
-                        Double n1 = new Double(array.get(i-1));
-                        Double n2 = new Double(array.get(i+1));
-                        if(s.equals("+")) array.set(i,""+(n1+n2));
+                        Double n1 = Double.valueOf(array.get(i-1));
+                        Double n2 = Double.valueOf(array.get(i+1));
+                        if(s.equals("+")) array.set(i, "" + (n1 + n2));
                         if(s.equals("-")) array.set(i,""+(n1-n2));
                         array.remove(i-1);
                         array.remove(i);
@@ -176,7 +169,7 @@ public class MainActivity extends ActionBarActivity {
                 while (i < expression.length()) { //Recorremos la expresion sacando las operaciones y los operandos
                     int j = i;
                     boolean sw = false;
-                    while (j < expression.length() && sw == false) {
+                    while (j < expression.length() && !sw) {
                         String s = expression.substring(j, j + 1);
                         if (s.equals("+") || s.equals("*") || s.equals("-") || s.equals("/")) {
                             if (s.equals("-") && expression.substring(i, j).isEmpty()) {

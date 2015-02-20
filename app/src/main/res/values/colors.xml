@@ -8,4 +8,6 @@
     <color name="white">#FFF</color>
     <color name="gray">#FFD6D6D6</color>
     <color name="gray_ligth">#FFF6F6F6</color>
+    <color name="orange">#a84929</color>
+    <color name="orange_ligth">#cb5e31</color>
 </resources>
